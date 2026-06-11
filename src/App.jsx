@@ -177,8 +177,8 @@ function BrandLogo({ name }) {
 }
 
 export default function App() {
-  const phoneNumber = "6315427050";
-  const whatsappNumber = "916315427050";
+  const phoneNumber = "6354270509";
+  const whatsappNumber = "916354270509";
   const whatsappText = encodeURIComponent(
     "Hi Sahir, mujhe CCTV / WiFi / Networking ke liye visit book karna hai."
   );
@@ -450,7 +450,7 @@ export default function App() {
             </div>
             <div>
               <p className="text-xs font-semibold tracking-[0.2em] text-white/60">CCTV & IT SOLUTIONS</p>
-              <p className="text-lg font-semibold leading-tight text-white">Sahir Solanki</p>
+              <p className="text-lg font-semibold leading-tight text-white">Riyansh SecureTech</p>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
