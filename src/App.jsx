@@ -33,12 +33,18 @@ function Chip({ children, color = "" }) {
   );
 }
 
-function Service({ title, icon }) {
+function Service({ title, icon, href }) {
+  const CardTag = href ? "a" : "div";
   return (
-    <div className="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-white/7 hover:ring-white/18">
+    <CardTag
+      href={href}
+      target={href ? "_blank" : undefined}
+      rel={href ? "noreferrer" : undefined}
+      className="group flex items-center gap-4 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 transition hover:bg-white/7 hover:ring-white/18"
+    >
       <div className="shrink-0">{icon}</div>
       <h3 className="text-sm font-semibold text-white/90">{title}</h3>
-    </div>
+    </CardTag>
   );
 }
 
@@ -61,12 +67,9 @@ function ProcessStep({ step, title, desc, icon }) {
   return (
     <div className="relative flex gap-4">
       <div className="flex flex-col items-center">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-2xl bg-sky-400/15 ring-1 ring-sky-300/25 text-sky-200 text-xs font-bold">
-          {step}
-        </div>
-        <div className="mt-2 w-px flex-1 bg-white/10" />
+        <div className="w-px flex-1 bg-white/10" />
       </div>
-      <div className="pb-8">
+      <div className="pb-8 pl-2">
         <div className="flex items-center gap-3 mb-2">
           {icon}
           <h3 className="text-sm font-semibold text-white/90">{title}</h3>
@@ -147,10 +150,33 @@ function BrandLogo({ name }) {
         <circle cx="28" cy="9" r="3.2" fill="#E2231A" />
       </svg>
     ),
-    TVT: (
-      <svg viewBox="0 0 120 32" className="h-7 w-auto text-white" fill="currentColor">
-        <text x="0" y="24" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="24" fill="#00A1E9" letterSpacing="2">TVT</text>
-        <text x="68" y="23" fontFamily="system-ui, sans-serif" fontWeight="500" fontSize="9" fill="#FFFFFF" letterSpacing="1" opacity="0.8">DIGITAL</text>
+    Coreprix: (
+      <svg viewBox="0 0 170 52" className="h-10 w-auto" fill="none" aria-hidden="true">
+        <circle cx="84" cy="16" r="11" fill="#39A8E4" />
+        <path d="M84 1A15 15 0 0 1 99 16" stroke="#1E6A9F" strokeWidth="5.5" strokeLinecap="round" />
+        <path d="M97 16A15 15 0 0 1 84 31" stroke="#B8E12A" strokeWidth="5.5" strokeLinecap="round" />
+        <path d="M84 7c-5 0-9 3.5-11 8" stroke="#0E2A44" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+        <path d="M84 7c5 0 9 3.5 11 8" stroke="#0E2A44" strokeWidth="1" strokeLinecap="round" opacity="0.7" />
+        <path d="M75 18c3.5 2.5 14.5 2.5 18 0" stroke="#0E2A44" strokeWidth="1" strokeLinecap="round" opacity="0.6" />
+        <text x="16" y="45" fontFamily="system-ui, sans-serif" fontWeight="500" fontSize="30" fill="#2C4F79" letterSpacing="-1.2">Coreprix</text>
+      </svg>
+    ),
+    Bosch: (
+      <svg viewBox="0 0 180 52" className="h-10 w-auto" fill="none" aria-hidden="true">
+        <circle cx="28" cy="26" r="23" stroke="#A7B0BA" strokeWidth="2" />
+        <circle cx="28" cy="26" r="18" stroke="#D1D5DB" strokeWidth="2" />
+        <path d="M18 17h5l5 9 5-9h5v18h-5V25l-5 8-5-8v10h-5V17Z" stroke="#8B949E" strokeWidth="1.8" strokeLinejoin="round" />
+        <text x="58" y="38" fontFamily="system-ui, sans-serif" fontWeight="800" fontSize="34" fill="#EF1D25" letterSpacing="1">BOSCH</text>
+      </svg>
+    ),
+    Securus: (
+      <svg viewBox="0 0 180 52" className="h-10 w-auto" fill="none" aria-hidden="true">
+        <path d="M18 15c5 0 8 2 11 5" stroke="#EF1D25" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M14 21c6 0 10 2 14 6" stroke="#EF1D25" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M12 27c6 0 11 2 16 7" stroke="#EF1D25" strokeWidth="2.6" strokeLinecap="round" />
+        <path d="M17 35c4-1 8-1 12 0" stroke="#111827" strokeWidth="2.2" strokeLinecap="round" />
+        <text x="48" y="33" fontFamily="serif" fontWeight="700" fontSize="30" fill="#EF1D25" letterSpacing="0.5">SECURUS</text>
+        <text x="52" y="43" fontFamily="system-ui, sans-serif" fontWeight="600" fontSize="8" fill="#111827" letterSpacing="1.1">MADE IN INDIA CCTV BRAND</text>
       </svg>
     ),
     "TP-Link": (
@@ -170,7 +196,7 @@ function BrandLogo({ name }) {
   };
 
   return (
-    <div className="flex items-center justify-center rounded-2xl bg-white/5 px-6 py-4 ring-1 ring-white/10 transition hover:bg-white/8 hover:ring-white/15">
+    <div className="flex h-[74px] w-[200px] shrink-0 items-center justify-center rounded-2xl bg-white/5 px-5 ring-1 ring-white/10 transition hover:bg-white/8 hover:ring-white/15">
       {logos[name] || <span className="text-xs font-semibold text-white/45 tracking-widest uppercase">{name}</span>}
     </div>
   );
@@ -182,10 +208,14 @@ export default function App() {
   const whatsappText = encodeURIComponent(
     "Hi Sahir, mujhe CCTV / WiFi / Networking ke liye visit book karna hai."
   );
+  const createWhatsAppLink = (message) =>
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 
   const services = [
     {
       title: "HD & IP CCTV Installation",
+      message:
+        "नमस्ते Sahir, मुझे HD & IP CCTV Installation की service चाहिए। कृपया details और visit timing बताएं।",
       icon: (
         <Icon>
           <path d="M3 11l9-5 9 5-9 5-9-5Z" />
@@ -196,6 +226,8 @@ export default function App() {
     },
     {
       title: "Server / NVR Setup",
+      message:
+        "नमस्ते Sahir, मुझे Server / NVR Setup की service चाहिए। कृपया details और visit timing बताएं।",
       icon: (
         <Icon className="text-indigo-200">
           <path d="M5 5h14v6H5z" />
@@ -206,7 +238,9 @@ export default function App() {
       ),
     },
     {
-      title: "Long‑Range Cameras",
+      title: "Long-Range Cameras",
+      message:
+        "नमस्ते Sahir, मुझे Long-Range Cameras के बारे में जानकारी चाहिए। कृपया details बताएं।",
       icon: (
         <Icon>
           <path d="M4 12a8 8 0 0 1 16 0" />
@@ -218,6 +252,8 @@ export default function App() {
     },
     {
       title: "WiFi / Networking",
+      message:
+        "नमस्ते Sahir, मुझे WiFi / Networking service चाहिए। कृपया details और visit timing बताएं।",
       icon: (
         <Icon>
           <path d="M5 12.5a10 10 0 0 1 14 0" />
@@ -229,6 +265,8 @@ export default function App() {
     },
     {
       title: "Routing / Switching",
+      message:
+        "नमस्ते Sahir, मुझे Routing / Switching service चाहिए। कृपया details और visit timing बताएं।",
       icon: (
         <Icon className="text-cyan-200">
           <path d="M4 7h16v4H4z" />
@@ -239,6 +277,8 @@ export default function App() {
     },
     {
       title: "AMC Maintenance",
+      message:
+        "नमस्ते Sahir, मुझे AMC Maintenance के लिए जानकारी चाहिए। कृपया details और visit timing बताएं।",
       icon: (
         <Icon>
           <path d="M12 2l7 4v6c0 5-3 9-7 10-4-1-7-5-7-10V6l7-4Z" />
@@ -269,7 +309,7 @@ export default function App() {
       ),
     },
     {
-      value: "1hr",
+      value: "4hr",
       label: "Avg Response Time",
       icon: (
         <Icon className="text-cyan-200">
@@ -423,7 +463,8 @@ export default function App() {
     },
   ];
 
-  const brands = ["Hikvision", "Dahua", "CP Plus", "TVT", "TP-Link", "Ubiquiti"];
+  const brands = ["Hikvision", "Dahua", "CP Plus", "Coreprix", "Bosch", "Securus", "TP-Link"];
+  const marqueeBrands = [...brands, ...brands];
 
   return (
     <div className="min-h-screen text-white">
@@ -478,14 +519,14 @@ export default function App() {
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a href={`tel:+91${phoneNumber}`} className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-400/20 transition hover:bg-sky-300 focus:outline-none focus:ring-2 focus:ring-sky-300/60">
-                <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="size-5 text-sky-700" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L9.09 10.91a16 16 0 0 0 4 4l1.58-1.12a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z" />
                 </svg>
                 Call
                 <span className="text-xs font-semibold opacity-80">+91 {phoneNumber}</span>
               </a>
-              <a href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-sm font-semibold text-white ring-1 ring-white/15 transition hover:bg-white/15 focus:outline-none focus:ring-2 focus:ring-sky-200/30">
-                <svg viewBox="0 0 24 24" className="size-5 text-sky-200" fill="currentColor" aria-hidden="true">
+              <a href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366]/15 px-5 py-3 text-sm font-semibold text-white ring-1 ring-[#25D366]/30 transition hover:bg-[#25D366]/20 focus:outline-none focus:ring-2 focus:ring-[#25D366]/40">
+                <svg viewBox="0 0 24 24" className="size-5 text-[#25D366]" fill="currentColor" aria-hidden="true">
                   <path d="M20.52 3.48A11.91 11.91 0 0 0 12.04 0C5.43.01.05 5.39.04 12c0 2.12.56 4.19 1.62 6.01L0 24l6.19-1.62A11.97 11.97 0 0 0 12 24h.01c6.62 0 12-5.38 12-12a11.9 11.9 0 0 0-3.49-8.52ZM12 22a9.96 9.96 0 0 1-5.09-1.4l-.36-.21-3.68.96.98-3.59-.24-.37A9.93 9.93 0 0 1 2.04 12C2.05 6.49 6.52 2.02 12.04 2.02A9.93 9.93 0 0 1 22 12c0 5.51-4.49 10-10 10Zm5.8-7.52c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.52-.16-.74.16-.22.32-.85 1.05-1.04 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.58-1.6-.95-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.22-.32.32-.54.11-.22.06-.41-.03-.57-.08-.16-.74-1.78-1.01-2.43-.27-.64-.54-.56-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.32-1.14 1.12-1.14 2.73 0 1.61 1.17 3.16 1.33 3.38.16.22 2.3 3.52 5.57 4.93.78.34 1.39.54 1.87.69.79.25 1.51.22 2.08.13.63-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.63-.38Z" />
                 </svg>
                 WhatsApp
@@ -536,7 +577,12 @@ export default function App() {
                 <h2 className="mt-2 text-xl font-semibold">Quick Icons</h2>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {services.map((s) => (
-                    <Service key={s.title} title={s.title} icon={s.icon} />
+                    <Service
+                      key={s.title}
+                      title={s.title}
+                      icon={s.icon}
+                      href={createWhatsAppLink(s.message)}
+                    />
                   ))}
                 </div>
                 <div className="mt-6 rounded-2xl bg-white/5 p-4 ring-1 ring-white/10">
@@ -546,15 +592,28 @@ export default function App() {
                       <p className="mt-1 text-xs text-white/65">Call / WhatsApp</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <a href={`tel:+91${phoneNumber}`} className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2 text-xs font-semibold ring-1 ring-white/15 transition hover:bg-white/15">
+                      <a
+                        href={`tel:+91${phoneNumber}`}
+                        className="inline-flex h-11 items-center gap-2 rounded-xl bg-white/10 px-3 text-xs font-semibold leading-none whitespace-nowrap ring-1 ring-white/15 transition hover:bg-white/15"
+                      >
                         <span className="inline-flex size-7 items-center justify-center rounded-lg bg-sky-400/20 ring-1 ring-sky-300/20">
-                          <svg viewBox="0 0 24 24" className="size-4 text-sky-200" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" className="size-4 text-sky-500" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3 5.18 2 2 0 0 1 5.11 3h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.5a2 2 0 0 1-.45 2.11L9.09 10.91a16 16 0 0 0 4 4l1.58-1.12a2 2 0 0 1 2.11-.45c.8.24 1.64.42 2.5.54A2 2 0 0 1 22 16.92z" />
                           </svg>
                         </span>
                         Call
                       </a>
-                      <a href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-sky-400 px-3 py-2 text-xs font-semibold text-slate-950 transition hover:bg-sky-300">
+                      <a
+                        href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex h-11 items-center gap-2 rounded-xl bg-[#25D366] px-3 text-xs font-semibold leading-none whitespace-nowrap text-slate-950 transition hover:bg-[#20bd5a]"
+                      >
+                        <span className="inline-flex size-7 items-center justify-center rounded-lg bg-white/15 ring-1 ring-white/20">
+                          <svg viewBox="0 0 24 24" className="size-4 text-white" fill="currentColor" aria-hidden="true">
+                            <path d="M20.52 3.48A11.91 11.91 0 0 0 12.04 0C5.43.01.05 5.39.04 12c0 2.12.56 4.19 1.62 6.01L0 24l6.19-1.62A11.97 11.97 0 0 0 12 24h.01c6.62 0 12-5.38 12-12a11.9 11.9 0 0 0-3.49-8.52ZM12 22a9.96 9.96 0 0 1-5.09-1.4l-.36-.21-3.68.96.98-3.59-.24-.37A9.93 9.93 0 0 1 2.04 12C2.05 6.49 6.52 2.02 12.04 2.02A9.93 9.93 0 0 1 22 12c0 5.51-4.49 10-10 10Zm5.8-7.52c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.52-.16-.74.16-.22.32-.85 1.05-1.04 1.26-.19.21-.38.24-.7.08-.32-.16-1.36-.5-2.58-1.6-.95-.85-1.6-1.9-1.79-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.38.48-.56.16-.19.22-.32.32-.54.11-.22.06-.41-.03-.57-.08-.16-.74-1.78-1.01-2.43-.27-.64-.54-.56-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.32-1.14 1.12-1.14 2.73 0 1.61 1.17 3.16 1.33 3.38.16.22 2.3 3.52 5.57 4.93.78.34 1.39.54 1.87.69.79.25 1.51.22 2.08.13.63-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.63-.38Z" />
+                          </svg>
+                        </span>
                         WhatsApp
                       </a>
                     </div>
@@ -744,13 +803,28 @@ export default function App() {
         </section>
 
         {/* ── BRANDS ── */}
-        <section className="rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
+        <section className="rounded-[28px] bg-white/5 p-6 ring-1 ring-white/10 sm:p-8">
           <p className="text-xs font-semibold tracking-[0.18em] text-white/60">TRUSTED BRANDS</p>
           <h2 className="mt-2 text-xl font-semibold">We Work With</h2>
-          <div className="mt-6 grid grid-cols-3 gap-3 sm:grid-cols-6">
-            {brands.map((b) => (
-              <BrandLogo key={b} name={b} />
-            ))}
+          <div className="mt-6 overflow-hidden">
+            <style>{`
+              @keyframes brand-marquee {
+                0% {
+                  transform: translateX(0);
+                }
+                100% {
+                  transform: translateX(-50%);
+                }
+              }
+              .brand-marquee-track {
+                animation: brand-marquee 24s linear infinite;
+              }
+            `}</style>
+            <div className="brand-marquee-track flex w-max gap-3">
+              {marqueeBrands.map((b, index) => (
+                <BrandLogo key={`${b}-${index}`} name={b} />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -777,7 +851,7 @@ export default function App() {
               href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`}
               target="_blank"
               rel="noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-sky-300"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-[#20bd5a]"
             >
               Ask on WhatsApp
             </a>
@@ -820,7 +894,7 @@ export default function App() {
               </div>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
-              <a href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-sky-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-sky-400/20 transition hover:bg-sky-300">
+              <a href={`https://wa.me/${whatsappNumber}?text=${whatsappText}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-[#25D366]/20 transition hover:bg-[#20bd5a]">
                 WhatsApp to Book Visit
               </a>
               <a href={`tel:+91${phoneNumber}`} className="inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 px-5 py-3 text-sm font-semibold text-white ring-1 ring-white/15 transition hover:bg-white/15">
